@@ -1,7 +1,5 @@
 package com.zxxk.zyglpt.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -21,7 +19,6 @@ import javax.persistence.MappedSuperclass;
 public class QuestionOption<T extends Question>{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private String sign;

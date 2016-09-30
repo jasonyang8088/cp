@@ -11,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +84,12 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public Long countByForm(QuestionSearchForm form, Long subjectId) {
 		return questionFactory.create(subjectId).count(this.createSpecification(form));
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public List<Question> findByMaxId(Long subjectId, Long maxid, Pageable pageRequest) {
+		return questionFactory.create(subjectId).findByIdGreaterThan(maxid,pageRequest);
 	}
 
 }

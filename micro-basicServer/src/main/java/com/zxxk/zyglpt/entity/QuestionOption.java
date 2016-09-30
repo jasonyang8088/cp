@@ -9,6 +9,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 试题选项
  * 
@@ -30,6 +32,7 @@ public class QuestionOption<T extends Question>{
 	private String text;
 	
 	@ManyToOne
+	@JsonIgnore
 	private T question;
 	
 	public Long getId() {

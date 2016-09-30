@@ -15,6 +15,8 @@ public interface QuestionRepository<T extends Question> extends JpaRepository<T,
 	List<Question> findByQuestionTypeIdAndSplitStatus(long l, byte b);
 
 	List<Question> findTop1000ByQuestionTypeIdAndSplitStatus(long l, byte b);
+
+	Question findTopByParentIsNullOrderByIdDesc();
 	
 	
 

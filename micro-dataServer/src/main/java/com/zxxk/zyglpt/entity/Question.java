@@ -4,9 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,13 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("rawtypes")
 @MappedSuperclass
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Question<T extends QuestionOption,O extends QuestionAnswer,Q extends Question> {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Lob
@@ -41,11 +40,11 @@ public abstract class Question<T extends QuestionOption,O extends QuestionAnswer
 	
 	private Byte difficult;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	private Document document;
+	@Column(name="document_id")
+	private Long documentId;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	private QuestionType questionType;
+	@Column(name="question_type_id")
+	private Long questionTypeId;
 	
 	private Integer zjId;
 	
@@ -53,9 +52,6 @@ public abstract class Question<T extends QuestionOption,O extends QuestionAnswer
 	 * 组卷次数
 	 */
 	private Integer useCount;
-	
-	@ManyToOne
-	private QuestionSearchSpec questionSearchSpec;
 	
 	@ManyToMany
 	private List<QuestionSearchSpec> questionSearchSpecs;
@@ -72,6 +68,7 @@ public abstract class Question<T extends QuestionOption,O extends QuestionAnswer
 	private Byte splitStatus=0;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Q parent;
 	
 	@OneToMany(mappedBy="parent",cascade=CascadeType.ALL)
@@ -97,13 +94,6 @@ public abstract class Question<T extends QuestionOption,O extends QuestionAnswer
 		return options;
 	}
 
-	public Document getDocument() {
-		return document;
-	}
-
-	public void setDocument(Document document) {
-		this.document = document;
-	}
 
 	public void setOptions(String options) {
 		this.options = options;
@@ -141,12 +131,20 @@ public abstract class Question<T extends QuestionOption,O extends QuestionAnswer
 		this.difficult = difficult;
 	}
 
-	public QuestionType getQuestionType() {
-		return questionType;
+	public Long getDocumentId() {
+		return documentId;
 	}
 
-	public void setQuestionType(QuestionType questionType) {
-		this.questionType = questionType;
+	public void setDocumentId(Long documentId) {
+		this.documentId = documentId;
+	}
+
+	public Long getQuestionTypeId() {
+		return questionTypeId;
+	}
+
+	public void setQuestionTypeId(Long questionTypeId) {
+		this.questionTypeId = questionTypeId;
 	}
 
 	public Integer getZjId() {
@@ -171,14 +169,6 @@ public abstract class Question<T extends QuestionOption,O extends QuestionAnswer
 
 	public void setQuestionSearchSpecs(List<QuestionSearchSpec> questionSearchSpecs) {
 		this.questionSearchSpecs = questionSearchSpecs;
-	}
-
-	public QuestionSearchSpec getQuestionSearchSpec() {
-		return questionSearchSpec;
-	}
-
-	public void setQuestionSearchSpec(QuestionSearchSpec questionSearchSpec) {
-		this.questionSearchSpec = questionSearchSpec;
 	}
 
 	public List<T> getOptionlist() {
