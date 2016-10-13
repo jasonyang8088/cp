@@ -76,6 +76,30 @@ public class Question {
 		this.analyse = analyse;
 	}
 
+	public byte getIsCailiao() {
+		return isCailiao;
+	}
+
+	public void setIsCailiao(byte isCailiao) {
+		this.isCailiao = isCailiao;
+	}
+
+	public Question getParent() {
+		return parent;
+	}
+
+	public void setParent(Question parent) {
+		this.parent = parent;
+	}
+
+	public List<Question> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Question> children) {
+		this.children = children;
+	}
+
 	public String getComment() {
 		return comment;
 	}
